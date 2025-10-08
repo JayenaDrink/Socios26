@@ -1,0 +1,14 @@
+{
+  "name": "socios26",
+  "version": "1.0.0",
+  "description": "Socios Club Member Management System",
+  "scripts": {
+    "build": "cd socios-club && npm run build",
+    "dev": "cd socios-club && npm run dev",
+    "start": "cd socios-club && npm run start",
+    "install-deps": "cd socios-club && npm install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
