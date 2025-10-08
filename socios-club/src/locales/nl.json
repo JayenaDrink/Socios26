@@ -1,0 +1,75 @@
+{
+  "common": {
+    "language": "Taal",
+    "search": "Zoeken",
+    "add": "Toevoegen",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Succes"
+  },
+  "navigation": {
+    "title": "Club Amistades Belgas de Levante",
+    "searchMembers": "Zoek Leden",
+    "addMember": "Lid Toevoegen",
+    "dashboard": "Dashboard"
+  },
+  "memberSearch": {
+    "title": "Zoek Lid uit 2025 Lijst",
+    "description": "Zoek een bestaand lid op lidnummer of e-mailadres",
+    "memberNumber": "Lidnummer",
+    "email": "E-mailadres",
+    "searchButton": "Zoek Lid",
+    "noResults": "Geen leden gevonden",
+    "foundMember": "Lid gevonden",
+    "transferButton": "Overzetten naar 2026"
+  },
+  "memberForm": {
+    "title": "Nieuw Lid Toevoegen",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "memberNumber": "Lidnummer",
+    "phone": "Telefoonnummer",
+    "email": "E-mailadres",
+    "amountPaid": "Betaald Bedrag",
+    "amountOptions": {
+      "35": "€35 (Standaard)",
+      "20": "€20 (Reductie)"
+    },
+    "submitButton": "Lid Toevoegen",
+    "required": "Verplicht veld"
+  },
+  "messages": {
+    "memberAdded": "Lid succesvol toegevoegd",
+    "memberTransferred": "Lid succesvol overgezet naar 2026",
+    "mailchimpSynced": "Lid toegevoegd aan MailChimp",
+    "errorOccurred": "Er is een fout opgetreden",
+    "invalidEmail": "Ongeldig e-mailadres",
+    "memberExists": "Lid met dit nummer of e-mailadres bestaat al"
+  },
+  "addMember": {
+    "title": "Nieuw Lid Toevoegen",
+    "description": "Voeg handmatig individuele leden toe aan uw database. Kies de doeldatabase en of u wilt synchroniseren met MailChimp.",
+    "targetDatabase": "Doeldatabase",
+    "database2025": "2025 Leden",
+    "database2026": "2026 Leden",
+    "mailchimpSync": "Wordt gesynchroniseerd met MailChimp",
+    "memberNumber": "Lidnummer",
+    "memberNumberPlaceholder": "Voer lidnummer in",
+    "firstName": "Voornaam",
+    "firstNamePlaceholder": "Voer voornaam in",
+    "lastName": "Achternaam",
+    "lastNamePlaceholder": "Voer achternaam in",
+    "email": "E-mailadres",
+    "emailPlaceholder": "Voer e-mailadres in",
+    "phone": "Telefoonnummer",
+    "phonePlaceholder": "Voer telefoonnummer in",
+    "amountPaid": "Betaald Bedrag",
+    "addButton": "Lid Toevoegen",
+    "adding": "Lid toevoegen...",
+    "willSync": "Wordt gesynchroniseerd met MailChimp"
+  }
+}

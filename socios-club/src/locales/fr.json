@@ -1,0 +1,75 @@
+{
+  "common": {
+    "language": "Langue",
+    "search": "Rechercher",
+    "add": "Ajouter",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
+  },
+  "navigation": {
+    "title": "Club Amistades Belgas de Levante",
+    "searchMembers": "Rechercher Membres",
+    "addMember": "Ajouter Membre",
+    "dashboard": "Tableau de bord"
+  },
+  "memberSearch": {
+    "title": "Rechercher Membre de la Liste 2025",
+    "description": "Rechercher un membre existant par numéro de membre ou adresse e-mail",
+    "memberNumber": "Numéro de membre",
+    "email": "Adresse e-mail",
+    "searchButton": "Rechercher Membre",
+    "noResults": "Aucun membre trouvé",
+    "foundMember": "Membre trouvé",
+    "transferButton": "Transférer vers 2026"
+  },
+  "memberForm": {
+    "title": "Ajouter Nouveau Membre",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "memberNumber": "Numéro de membre",
+    "phone": "Numéro de téléphone",
+    "email": "Adresse e-mail",
+    "amountPaid": "Montant payé",
+    "amountOptions": {
+      "35": "€35 (Standard)",
+      "20": "€20 (Réduction)"
+    },
+    "submitButton": "Ajouter Membre",
+    "required": "Champ obligatoire"
+  },
+  "messages": {
+    "memberAdded": "Membre ajouté avec succès",
+    "memberTransferred": "Membre transféré avec succès vers 2026",
+    "mailchimpSynced": "Membre ajouté à MailChimp",
+    "errorOccurred": "Une erreur s'est produite",
+    "invalidEmail": "Adresse e-mail invalide",
+    "memberExists": "Un membre avec ce numéro ou cette adresse e-mail existe déjà"
+  },
+  "addMember": {
+    "title": "Ajouter un Nouveau Membre",
+    "description": "Ajoutez manuellement des membres individuels à votre base de données. Choisissez la base de données cible et si vous voulez synchroniser avec MailChimp.",
+    "targetDatabase": "Base de Données Cible",
+    "database2025": "Membres 2025",
+    "database2026": "Membres 2026",
+    "mailchimpSync": "Sera synchronisé avec MailChimp",
+    "memberNumber": "Numéro de Membre",
+    "memberNumberPlaceholder": "Entrez le numéro de membre",
+    "firstName": "Prénom",
+    "firstNamePlaceholder": "Entrez le prénom",
+    "lastName": "Nom de Famille",
+    "lastNamePlaceholder": "Entrez le nom de famille",
+    "email": "Adresse E-mail",
+    "emailPlaceholder": "Entrez l'adresse e-mail",
+    "phone": "Numéro de Téléphone",
+    "phonePlaceholder": "Entrez le numéro de téléphone",
+    "amountPaid": "Montant Payé",
+    "addButton": "Ajouter Membre",
+    "adding": "Ajout du membre...",
+    "willSync": "Sera synchronisé avec MailChimp"
+  }
+}

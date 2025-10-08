@@ -1,0 +1,75 @@
+{
+  "common": {
+    "language": "Idioma",
+    "search": "Buscar",
+    "add": "Agregar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "navigation": {
+    "title": "Club Amistades Belgas de Levante",
+    "searchMembers": "Buscar Socios",
+    "addMember": "Agregar Socio",
+    "dashboard": "Panel de Control"
+  },
+  "memberSearch": {
+    "title": "Buscar Socio de la Lista 2025",
+    "description": "Buscar un socio existente por número de socio o dirección de correo electrónico",
+    "memberNumber": "Número de socio",
+    "email": "Dirección de correo electrónico",
+    "searchButton": "Buscar Socio",
+    "noResults": "No se encontraron socios",
+    "foundMember": "Socio encontrado",
+    "transferButton": "Transferir a 2026"
+  },
+  "memberForm": {
+    "title": "Agregar Nuevo Socio",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "memberNumber": "Número de socio",
+    "phone": "Número de teléfono",
+    "email": "Dirección de correo electrónico",
+    "amountPaid": "Cantidad pagada",
+    "amountOptions": {
+      "35": "€35 (Estándar)",
+      "20": "€20 (Reducción)"
+    },
+    "submitButton": "Agregar Socio",
+    "required": "Campo obligatorio"
+  },
+  "messages": {
+    "memberAdded": "Socio agregado exitosamente",
+    "memberTransferred": "Socio transferido exitosamente a 2026",
+    "mailchimpSynced": "Socio agregado a MailChimp",
+    "errorOccurred": "Ocurrió un error",
+    "invalidEmail": "Dirección de correo electrónico inválida",
+    "memberExists": "Ya existe un socio con este número o dirección de correo electrónico"
+  },
+  "addMember": {
+    "title": "Agregar Nuevo Socio",
+    "description": "Agregue manualmente socios individuales a su base de datos. Elija la base de datos objetivo y si desea sincronizar con MailChimp.",
+    "targetDatabase": "Base de Datos Objetivo",
+    "database2025": "Socios 2025",
+    "database2026": "Socios 2026",
+    "mailchimpSync": "Se sincronizará con MailChimp",
+    "memberNumber": "Número de Socio",
+    "memberNumberPlaceholder": "Ingrese el número de socio",
+    "firstName": "Nombre",
+    "firstNamePlaceholder": "Ingrese el nombre",
+    "lastName": "Apellido",
+    "lastNamePlaceholder": "Ingrese el apellido",
+    "email": "Dirección de Correo",
+    "emailPlaceholder": "Ingrese la dirección de correo",
+    "phone": "Número de Teléfono",
+    "phonePlaceholder": "Ingrese el número de teléfono",
+    "amountPaid": "Cantidad Pagada",
+    "addButton": "Agregar Socio",
+    "adding": "Agregando socio...",
+    "willSync": "Se sincronizará con MailChimp"
+  }
+}
