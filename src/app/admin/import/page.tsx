@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import AdminLayout from '@/components/AdminLayout';
 
 export default function AdminImportPage() {
-  const { t } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string; errors?: string[] } | null>(null);
@@ -36,7 +35,7 @@ export default function AdminImportPage() {
 
       const data = await response.json();
       setResult(data);
-    } catch (error) {
+    } catch {
       setResult({
         success: false,
         message: 'Network error occurred during import'

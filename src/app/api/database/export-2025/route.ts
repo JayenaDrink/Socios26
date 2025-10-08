@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDatabaseService } from '@/lib/supabase';
 import * as XLSX from 'xlsx';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const database = getDatabaseService();
     const members = await database.getMembers2025();

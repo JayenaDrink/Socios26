@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Member, MailChimpSync } from '@/types';
+import { Member } from '@/types';
 import { getMailChimpService } from './mailchimp';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;

@@ -1,5 +1,6 @@
 import Mailchimp from 'mailchimp-api-v3';
-import { Member, MailChimpSync, MAILCHIMP_AUDIENCE_NAME, MAILCHIMP_TAG } from '@/types';
+import { createHash } from 'crypto';
+import { Member, MailChimpSync, MAILCHIMP_TAG } from '@/types';
 
 export class MailChimpService {
   private mailchimp: Mailchimp;
@@ -25,7 +26,7 @@ export class MailChimpService {
       
       if (existingMember) {
         // Update existing member with new tags
-        const updatedMember = await this.updateMemberTags(existingMember.id, [MAILCHIMP_TAG]);
+        await this.updateMemberTags(existingMember.id, [MAILCHIMP_TAG]);
         return {
           member_id: member.id!,
           mailchimp_id: existingMember.id,
@@ -92,8 +93,7 @@ export class MailChimpService {
 
   // Get subscriber hash for email (required by MailChimp API)
   private getSubscriberHash(email: string): string {
-    const crypto = require('crypto');
-    return crypto.createHash('md5').update(email.toLowerCase()).digest('hex');
+    return createHash('md5').update(email.toLowerCase()).digest('hex');
   }
 
   // Test MailChimp connection

@@ -27,10 +27,8 @@ interface MailChimpStatus {
 }
 
 export default function AdminDashboard() {
-  const { t } = useTranslation();
   const [dbStatus, setDbStatus] = useState<DatabaseStatus>({ connected: false });
   const [mailchimpStatus, setMailchimpStatus] = useState<MailChimpStatus>({ success: false, configured: false, connected: false });
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     checkDatabaseStatus();
@@ -61,8 +59,6 @@ export default function AdminDashboard() {
         connected: false,
         error: 'Failed to connect to database'
       });
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -71,7 +67,7 @@ export default function AdminDashboard() {
       const response = await fetch('/api/mailchimp/status');
       const data = await response.json();
       setMailchimpStatus(data);
-    } catch (error) {
+    } catch {
       setMailchimpStatus({
         success: false,
         configured: false,
@@ -86,7 +82,7 @@ export default function AdminDashboard() {
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="mt-2 text-gray-600">Manage your club's member database and system settings</p>
+          <p className="mt-2 text-gray-600">Manage your club&apos;s member database and system settings</p>
         </div>
 
         {/* Quick Stats */}

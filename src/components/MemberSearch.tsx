@@ -150,7 +150,7 @@ export default function MemberSearch() {
           </button>
           
           <div className="text-sm text-gray-500 text-center">
-            💡 <strong>Tip:</strong> You can search with partial emails (e.g., "gmail" finds all Gmail addresses)
+            💡 <strong>Tip:</strong> You can search with partial emails (e.g., &quot;gmail&quot; finds all Gmail addresses)
           </div>
         </div>
 

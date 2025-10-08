@@ -26,7 +26,6 @@ interface MailChimpStatus {
 }
 
 export default function AdminStatusPage() {
-  const { t } = useTranslation();
   const [dbStatus, setDbStatus] = useState<DatabaseStatus>({ connected: false });
   const [mailchimpStatus, setMailchimpStatus] = useState<MailChimpStatus>({ success: false, configured: false, connected: false });
   const [loading, setLoading] = useState(true);
@@ -55,7 +54,7 @@ export default function AdminStatusPage() {
           error: data.error || 'Failed to connect to database'
         });
       }
-    } catch (error) {
+    } catch {
       setDbStatus({
         connected: false,
         error: 'Failed to connect to database'
@@ -70,7 +69,7 @@ export default function AdminStatusPage() {
       const response = await fetch('/api/mailchimp/status');
       const data = await response.json();
       setMailchimpStatus(data);
-    } catch (error) {
+    } catch {
       setMailchimpStatus({
         success: false,
         configured: false,

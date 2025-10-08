@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getGoogleDriveService } from '@/lib/googleDrive';
 import { getExcelService } from '@/lib/excelService';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const googleDrive = getGoogleDriveService();
     const excelService = getExcelService();

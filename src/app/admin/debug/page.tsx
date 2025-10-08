@@ -13,7 +13,6 @@ interface DebugResult {
 }
 
 export default function AdminDebugPage() {
-  const { t } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<DebugResult | null>(null);
@@ -44,7 +43,7 @@ export default function AdminDebugPage() {
 
       const data = await response.json();
       setResult(data);
-    } catch (error) {
+    } catch {
       setResult({
         success: false,
         error: 'Network error occurred during analysis'
@@ -140,7 +139,7 @@ export default function AdminDebugPage() {
                           <div key={field} className="flex items-center justify-between bg-white px-3 py-2 rounded border">
                             <span className="font-medium text-gray-700">{field}</span>
                             <span className="text-sm text-gray-500">
-                              Column {index}: "{result.headers?.[index]}"
+                              Column {index}: &quot;{result.headers?.[index]}&quot;
                             </span>
                           </div>
                         ))}

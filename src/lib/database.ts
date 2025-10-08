@@ -1,5 +1,4 @@
 import Database from 'better-sqlite3';
-import { join } from 'path';
 
 const dbPath = process.env.DATABASE_URL || './database.sqlite';
 const db = new Database(dbPath);

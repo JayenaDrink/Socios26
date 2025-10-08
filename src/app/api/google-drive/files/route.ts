@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getGoogleDriveService } from '@/lib/googleDrive';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const googleDrive = getGoogleDriveService();
     const excelFiles = await googleDrive.findExcelFiles();
