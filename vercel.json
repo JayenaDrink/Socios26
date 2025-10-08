@@ -1,8 +1,15 @@
 {
-  "buildCommand": "cd socios-club && npm run build",
-  "outputDirectory": "socios-club/.next",
-  "installCommand": "cd socios-club && npm install",
-  "devCommand": "cd socios-club && npm run dev",
-  "framework": "nextjs",
-  "rootDirectory": "socios-club"
+  "version": 2,
+  "builds": [
+    {
+      "src": "socios-club/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "socios-club/$1"
+    }
+  ]
 }
