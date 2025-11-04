@@ -115,11 +115,9 @@ export default function AddMemberPage() {
                 <option value="2025">{t('addMember.database2025')}</option>
                 <option value="2026">{t('addMember.database2026')}</option>
               </select>
-              {formData.database === '2026' && (
-                <p className="text-sm text-green-600 mt-1">
-                  ✓ {t('addMember.mailchimpSync')}
-                </p>
-              )}
+              <p className="text-sm text-green-600 mt-1">
+                ✓ {t('addMember.mailchimpSync')}
+              </p>
             </div>
 
             {/* Member Number */}

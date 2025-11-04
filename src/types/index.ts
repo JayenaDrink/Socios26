@@ -49,5 +49,9 @@ export const SUPPORTED_LANGUAGES: Language[] = [
 ];
 
 export const DEFAULT_AMOUNTS = [35, 20] as const;
-export const MAILCHIMP_AUDIENCE_NAME = 'Belgas 2026';
+export const MAILCHIMP_AUDIENCE_NAME_2025 = 'Belgas 2024';
+export const MAILCHIMP_AUDIENCE_ID_2025 = '65fd18c7cb';
+export const MAILCHIMP_AUDIENCE_NAME_2026 = 'Belgas 2026';
+export const MAILCHIMP_AUDIENCE_ID_2026 = '4bdcec18f3';
 export const MAILCHIMP_TAG = 'Activos 25-26';
+export const MAILCHIMP_TAG_2025 = '2025 Activos';

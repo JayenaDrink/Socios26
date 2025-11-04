@@ -1,19 +1,49 @@
 import { createClient } from '@supabase/supabase-js';
 import { Member } from '@/types';
 import { getMailChimpService } from './mailchimp';
+import { LocalDatabaseService } from './database';
+import { NeonDatabaseService } from './neon';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// Determine which database to use (priority: Neon > Supabase > Local)
+// 1. Neon (recommended - no auto-suspend)
+// 2. Supabase (legacy support)
+// 3. Local SQLite (fallback)
+const useNeon = !!process.env.DATABASE_URL;
+const useSupabase = !useNeon && !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const useLocalDb = process.env.NEXT_PUBLIC_USE_LOCAL_DB === 'true' || (!useNeon && !useSupabase);
 
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Missing Supabase environment variables. Please check your .env.local file.');
+let supabase: any = null;
+
+if (useSupabase) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase environment variables. Please check your .env.local file.');
+  }
+
+  supabase = createClient(supabaseUrl, supabaseKey);
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
-
 export class DatabaseService {
+  private localDb: LocalDatabaseService;
+  private neonDb: NeonDatabaseService | null;
+
+  constructor() {
+    this.localDb = new LocalDatabaseService();
+    this.neonDb = useNeon ? new NeonDatabaseService() : null;
+  }
+
   // Get all members from 2025 table
   async getMembers2025(): Promise<Member[]> {
+    if (useLocalDb) {
+      return this.localDb.getMembers2025();
+    }
+
+    if (useNeon && this.neonDb) {
+      return this.neonDb.getMembers2025();
+    }
+
     const { data, error } = await supabase
       .from('members_2025')
       .select('*')
@@ -29,6 +59,14 @@ export class DatabaseService {
 
   // Get all members from 2026 table
   async getMembers2026(): Promise<Member[]> {
+    if (useLocalDb) {
+      return this.localDb.getMembers2026();
+    }
+
+    if (useNeon && this.neonDb) {
+      return this.neonDb.getMembers2026();
+    }
+
     const { data, error } = await supabase
       .from('members_2026')
       .select('*')
@@ -44,6 +82,14 @@ export class DatabaseService {
 
   // Search members in 2025 table
   async searchMembers2025(criteria: { member_number?: string; email?: string }): Promise<Member[]> {
+    if (useLocalDb) {
+      return this.localDb.searchMembers2025(criteria);
+    }
+
+    if (useNeon && this.neonDb) {
+      return this.neonDb.searchMembers2025(criteria);
+    }
+
     let query = supabase.from('members_2025').select('*');
 
     if (criteria.member_number) {
@@ -68,6 +114,14 @@ export class DatabaseService {
 
   // Transfer member from 2025 to 2026
   async transferMemberTo2026(member: Member): Promise<Member> {
+    if (useLocalDb) {
+      return this.localDb.transferMemberTo2026(member);
+    }
+
+    if (useNeon && this.neonDb) {
+      return this.neonDb.transferMemberTo2026(member);
+    }
+
     // Check if member already exists in 2026 (only by member number)
     const { data: existingMember } = await supabase
       .from('members_2026')
@@ -123,6 +177,14 @@ export class DatabaseService {
 
   // Add new member to 2025 table
   async addMemberTo2025(member: Omit<Member, 'id' | 'created_at' | 'updated_at'>): Promise<Member> {
+    if (useLocalDb) {
+      return this.localDb.addMemberTo2025(member);
+    }
+
+    if (useNeon && this.neonDb) {
+      return this.neonDb.addMemberTo2025(member);
+    }
+
     const { data, error } = await supabase
       .from('members_2025')
       .insert([member])
@@ -134,11 +196,37 @@ export class DatabaseService {
       throw new Error('Failed to add member to 2025');
     }
 
+    // Add to MailChimp if configured
+    try {
+      const mailchimp = getMailChimpService();
+      if (mailchimp) {
+        const mailchimpSync = await mailchimp.addMemberToAudience(data);
+        
+        // Store MailChimp sync info in database
+        await supabase
+          .from('mailchimp_sync')
+          .insert([mailchimpSync]);
+        
+        console.log(`Member ${data.member_number} added to MailChimp audience`);
+      }
+    } catch (mailchimpError) {
+      console.error('MailChimp sync failed, but member was added:', mailchimpError);
+      // Don't fail the add if MailChimp fails
+    }
+
     return data;
   }
 
   // Add new member to 2026 table
   async addMemberTo2026(member: Omit<Member, 'id' | 'created_at' | 'updated_at'>): Promise<Member> {
+    if (useLocalDb) {
+      return this.localDb.addMemberTo2026(member);
+    }
+
+    if (useNeon && this.neonDb) {
+      return this.neonDb.addMemberTo2026(member);
+    }
+
     const { data, error } = await supabase
       .from('members_2026')
       .insert([member])
@@ -172,7 +260,19 @@ export class DatabaseService {
   }
 
   // Import members from Excel data to 2025 table
-  async importMembersTo2025(members: Member[]): Promise<{ success: number; errors: string[] }> {
+  async importMembersTo2025(members: Member[]): Promise<{ 
+    success: number; 
+    errors: string[] | Array<{ member_number: string; error: string; details?: any }>;
+    successful?: string[];
+  }> {
+    if (useLocalDb) {
+      return this.localDb.importMembersTo2025(members);
+    }
+
+    if (useNeon && this.neonDb) {
+      return this.neonDb.importMembersTo2025(members);
+    }
+
     const errors: string[] = [];
     let successCount = 0;
 
@@ -191,19 +291,39 @@ export class DatabaseService {
         }
 
         // Insert member
-        const { error } = await supabase
+        const { data: insertedMember, error } = await supabase
           .from('members_2025')
           .insert([{
             ...member,
             year: 2025,
             is_active: true,
             source: '2025_list'
-          }]);
+          }])
+          .select()
+          .single();
 
         if (error) {
           errors.push(`Failed to import ${member.member_number}: ${error.message}`);
         } else {
           successCount++;
+          
+          // Add to MailChimp if configured
+          try {
+            const mailchimp = getMailChimpService();
+            if (mailchimp && insertedMember) {
+              const mailchimpSync = await mailchimp.addMemberToAudience(insertedMember);
+              
+              // Store MailChimp sync info in database
+              await supabase
+                .from('mailchimp_sync')
+                .insert([mailchimpSync]);
+              
+              console.log(`Member ${insertedMember.member_number} added to MailChimp audience`);
+            }
+          } catch (mailchimpError) {
+            console.error(`MailChimp sync failed for member ${member.member_number}:`, mailchimpError);
+            // Don't fail the import if MailChimp fails
+          }
         }
       } catch (error) {
         errors.push(`Error importing ${member.member_number}: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -215,6 +335,14 @@ export class DatabaseService {
 
   // Get database status
   async getStatus(): Promise<{ connected: boolean; tables: { members_2025: number; members_2026: number }; error?: string }> {
+    if (useLocalDb) {
+      return this.localDb.getStatus();
+    }
+
+    if (useNeon && this.neonDb) {
+      return this.neonDb.getStatus();
+    }
+
     try {
       const [members2025, members2026] = await Promise.all([
         this.getMembers2025(),
@@ -237,6 +365,9 @@ export class DatabaseService {
     }
   }
 }
+
+// Export supabase client for compatibility (will be null in local mode)
+export { supabase };
 
 // Singleton instance
 let databaseService: DatabaseService | null = null;

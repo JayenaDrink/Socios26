@@ -1,10 +1,14 @@
 # Club Amistades Belgas de Levante - Setup Instructions
 
+> **⚠️ Important:** This project now supports **Neon** (recommended) as the primary database. Neon doesn't suspend inactive databases like Supabase's free tier. See **[NEON_SETUP.md](./NEON_SETUP.md)** for setup instructions.
+
 ## Phase 1: Project Setup Complete ✅
 
 The basic project structure has been created with:
 - Next.js 15 with TypeScript and Tailwind CSS
-- Supabase database (free tier)
+- **Neon PostgreSQL** database (recommended - no auto-suspend) ⭐
+- Supabase database (legacy support)
+- Local SQLite database (fallback)
 - Multilingual support (Dutch, French, Spanish)
 - Basic UI components and layout
 
@@ -20,7 +24,26 @@ Database integration has been implemented with:
 
 ## Next Steps: Database Setup
 
-### 1. Supabase Database Setup (FREE)
+### 🚀 RECOMMENDED: Neon Database Setup (No Auto-Suspend!)
+
+**See detailed instructions: [NEON_SETUP.md](./NEON_SETUP.md)**
+
+Quick setup:
+1. Create account at https://neon.tech/
+2. Create a new project
+3. Copy your connection string (starts with `postgresql://`)
+4. Run `neon-schema.sql` in Neon SQL Editor
+5. Add to `.env.local`: `DATABASE_URL=your_neon_connection_string`
+
+Benefits:
+- ✅ **No auto-suspend** - Database stays active 24/7
+- ✅ Free tier: 0.5GB storage, 3 projects
+- ✅ PostgreSQL compatible (same as Supabase)
+- ✅ Perfect for serverless Next.js apps
+
+---
+
+### 1. Supabase Database Setup (Legacy - May Suspend)
 
 1. **Go to Supabase**: https://supabase.com/
 2. **Create a new project** (free tier):
@@ -85,14 +108,23 @@ CREATE INDEX idx_members_2026_email ON members_2026(email);
 
 2. **Fill in your credentials** in `.env.local`:
    ```
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   # Neon Database (RECOMMENDED - No auto-suspend!)
+   DATABASE_URL=postgresql://user:password@host.neon.tech/dbname?sslmode=require
+   
+   # OR Supabase (Legacy - may suspend inactive databases)
+   # NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   # NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   
+   # Optional: Local SQLite (fallback)
+   # NEXT_PUBLIC_USE_LOCAL_DB=false
    
    # Optional: MailChimp integration
    MAILCHIMP_API_KEY=your_api_key
    MAILCHIMP_SERVER_PREFIX=your_server_prefix
    MAILCHIMP_AUDIENCE_ID=your_audience_id
    ```
+
+**Database Priority:** Neon → Supabase → Local SQLite
 
 ### 3. Install Dependencies and Run
 
@@ -112,7 +144,8 @@ The application will be available at `http://localhost:3000`
 
 - ✅ Multilingual interface (Dutch, French, Spanish)
 - ✅ Responsive design with Tailwind CSS
-- ✅ Supabase database with two tables (members_2025, members_2026)
+- ✅ Neon/PostgreSQL database with two tables (members_2025, members_2026)
+- ✅ Support for Neon, Supabase, and Local SQLite databases
 - ✅ Basic layout and navigation
 - ✅ Excel file import functionality
 - ✅ Member search functionality (search by member number or email)
@@ -142,7 +175,7 @@ The application will be available at `http://localhost:3000`
 2. **Import Data**: Go to `/import` to upload your Excel file with 2025 members
 3. **Search Members**: Go to `/search` and enter member number or email
 4. **Transfer Members**: Click "Transfer to 2026" button for found members
-5. **Database Storage**: All data is stored in Supabase (free tier)
+5. **Database Storage**: All data is stored in Neon (recommended) or Supabase (legacy)
 
 ## Project Structure
 
@@ -167,9 +200,14 @@ src/
    - Good for static sites
    - Free tier available
 
-3. **Supabase Hosting** (Database included)
-   - Your database is already hosted on Supabase
+3. **Neon Database** (Recommended - No auto-suspend)
+   - Your database is hosted on Neon
+   - Free tier includes 0.5GB storage, no auto-suspend
+   - See [NEON_SETUP.md](./NEON_SETUP.md) for setup
+
+4. **Supabase Hosting** (Legacy - May suspend)
    - Free tier includes 500MB storage and 50,000 monthly requests
+   - **Warning:** Inactive databases may be suspended
 
 ## Benefits of This Setup
 

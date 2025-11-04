@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       member: result,
-      message: `Member successfully added to ${database} database${database === '2026' ? ' and MailChimp' : ''}`
+      message: `Member successfully added to ${database} database and MailChimp`
     });
 
   } catch (error) {

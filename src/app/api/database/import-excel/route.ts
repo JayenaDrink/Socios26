@@ -49,15 +49,21 @@ export async function POST(request: NextRequest) {
     const database = getDatabaseService();
     const result = await database.importMembersTo2025(members);
 
-    return NextResponse.json({
+    // Enhanced result format
+    const response = {
       success: true,
       data: {
         imported: result.success,
-        errors: result.errors,
+        failed: result.errors.length,
         total: members.length,
-        message: `Successfully imported ${result.success} out of ${members.length} members`
+        errors: result.errors,
+        successful: 'successful' in result ? result.successful : [],
+        message: `Successfully imported ${result.success} out of ${members.length} members${result.errors.length > 0 ? ` (${result.errors.length} failed)` : ''}`,
+        timestamp: new Date().toISOString()
       }
-    });
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error('Error importing Excel file:', error);
     return NextResponse.json(

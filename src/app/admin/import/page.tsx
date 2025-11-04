@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import AdminLayout from '@/components/AdminLayout';
 
 export default function AdminImportPage() {
@@ -35,6 +34,19 @@ export default function AdminImportPage() {
 
       const data = await response.json();
       setResult(data);
+      
+      // Save results to localStorage for migration status page
+      if (data.success && data.data) {
+        try {
+          const existingResults = localStorage.getItem('migration_results');
+          const results = existingResults ? JSON.parse(existingResults) : [];
+          results.unshift(data.data); // Add newest first
+          // Keep only last 10 results
+          localStorage.setItem('migration_results', JSON.stringify(results.slice(0, 10)));
+        } catch (e) {
+          console.error('Error saving migration results:', e);
+        }
+      }
     } catch {
       setResult({
         success: false,
@@ -110,13 +122,28 @@ export default function AdminImportPage() {
                   <div className={`mt-2 text-sm ${
                     result.success ? 'text-green-700' : 'text-red-700'
                   }`}>
-                    <p>{result.message}</p>
-                    {result.errors && result.errors.length > 0 && (
+                    <p>{result.data?.message || result.message}</p>
+                    {result.data && (
+                      <div className="mt-2">
+                        <p>
+                          ✅ Successfully imported: <strong>{result.data.imported}</strong> / {result.data.total}
+                          {result.data.failed > 0 && (
+                            <span className="ml-2">❌ Failed: <strong>{result.data.failed}</strong></span>
+                          )}
+                        </p>
+                        <p className="mt-2 text-xs">
+                          <a href="/admin/migration-status" className="underline font-semibold">
+                            View detailed migration status →
+                          </a>
+                        </p>
+                      </div>
+                    )}
+                    {result.errors && result.errors.length > 0 && !result.data && (
                       <div className="mt-2">
                         <p className="font-medium">Errors:</p>
                         <ul className="list-disc list-inside mt-1">
                           {result.errors.map((error, index) => (
-                            <li key={index}>{error}</li>
+                            <li key={index}>{typeof error === 'string' ? error : error.error || JSON.stringify(error)}</li>
                           ))}
                         </ul>
                       </div>

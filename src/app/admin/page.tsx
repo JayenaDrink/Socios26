@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import AdminLayout from '@/components/AdminLayout';
 import Link from 'next/link';
 
@@ -54,7 +53,7 @@ export default function AdminDashboard() {
           error: data.error || 'Failed to connect to database'
         });
       }
-    } catch (error) {
+    } catch {
       setDbStatus({
         connected: false,
         error: 'Failed to connect to database'
@@ -151,6 +150,22 @@ export default function AdminDashboard() {
                 <div className="ml-4">
                   <h3 className="text-lg font-medium text-gray-900 group-hover:text-blue-600">Import Data</h3>
                   <p className="text-sm text-gray-500">Upload Excel files to import members</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/admin/migration-status" className="group">
+            <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                    <span className="text-orange-600 text-xl">📋</span>
+                  </div>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-medium text-gray-900 group-hover:text-orange-600">Migration Status</h3>
+                  <p className="text-sm text-gray-500">View import results and errors</p>
                 </div>
               </div>
             </div>
