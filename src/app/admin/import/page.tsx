@@ -6,7 +6,7 @@ import AdminLayout from '@/components/AdminLayout';
 export default function AdminImportPage() {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{ success: boolean; message: string; errors?: string[]; data?: { imported: number; total: number; failed: number; message?: string } } | null>(null);
+  const [result, setResult] = useState<{ success: boolean; message: string; errors?: (string | { error: string; member_number?: string; details?: any })[]; data?: { imported: number; total: number; failed: number; message?: string } } | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
