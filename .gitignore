@@ -48,3 +48,6 @@ next-env.d.ts
 
 # backups
 backup_*/
+
+# Online folder (duplicate/backup)
+Online/
