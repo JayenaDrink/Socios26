@@ -23,5 +23,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "backup_*", "Online", "backup_*/**", "Online/**"]
+  "exclude": ["node_modules", "backup_*", "Online", "socios-club", "backup_*/**", "Online/**", "socios-club/**"]
 }
